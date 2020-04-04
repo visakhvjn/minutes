@@ -10,7 +10,7 @@ import Config from "./config/constants";
   [
 	  ElasticsearchModule.register
 	  ({
-		  node: Config.database.elastic.local
+		  node: Config.database.elastic.bonsai
 	  })
   ],
   controllers: [AppController],
