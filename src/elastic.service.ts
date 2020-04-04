@@ -41,7 +41,11 @@ export class ElasticService
 
 	async fetch(index: string)
 	{
-		const result = await this.elasticsearchService.search({index: "news"});		
+		const result = await this.elasticsearchService.search
+		({
+			index: "news",
+			size:1000
+		});		
 
 		return(result.body.hits.hits);
 	}
