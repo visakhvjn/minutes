@@ -15,12 +15,14 @@ export class ElasticService
 
 		data.forEach((item) => 
 		{
+			console.log(item.title + "+" + item.publishedAt + "=" + sha1(item.title + item.publishedAt));
+
 			bulkBody.push
 			({
 				index: 
 				{
 					_index: index,
-					_id: sha1(item.title)
+					_id: sha1(item.title + item.publishedAt)
 				}
 			});
 
@@ -30,6 +32,7 @@ export class ElasticService
 		const insertedNews = await this.elasticsearchService.bulk
 		({
 			index: "news",
+			refresh: "true",
 			body: bulkBody
 		});		
 

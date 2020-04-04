@@ -12,7 +12,8 @@ export class NewsService
 		const headlines = await newsapi.v2.topHeadlines
 		({
 			language: "en",
-			country: "in"
+			country: "in",
+			pageSize: 100
 		});
 
 		return(headlines);
