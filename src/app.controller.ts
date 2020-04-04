@@ -1,4 +1,4 @@
-import { Controller, Get, Headers, InternalServerErrorException } from "@nestjs/common";
+import { Controller, Get, Headers, InternalServerErrorException, Post } from "@nestjs/common";
 import { ElasticService } from "./elastic.service";
 import { NewsService } from "./news/news.service";
 
@@ -39,7 +39,7 @@ export class AppController
 		return(this.response);
 	}
 
-	@Get("headlines/fetch")
+	@Post("headlines/fetch")
 	async fetch(@Headers() head: any)
 	{
 		console.log(head);
