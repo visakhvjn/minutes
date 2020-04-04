@@ -33,7 +33,7 @@ export class ElasticService
 		({
 			index: "news",
 			refresh: "true",
-			body: bulkBody
+			body: bulkBody,			
 		});		
 
 		return(insertedNews);
@@ -44,8 +44,20 @@ export class ElasticService
 		const result = await this.elasticsearchService.search
 		({
 			index: "news",
-			size:1000
-		});		
+			size:20,
+			body: 
+			{
+				"sort": 
+				[
+					{
+						"publishedAt": 
+						{
+							"order": "desc"
+						}
+					}
+				]
+			}			
+		});
 
 		return(result.body.hits.hits);
 	}
