@@ -9,13 +9,13 @@ export class ElasticService
 	constructor(private readonly elasticsearchService: ElasticsearchService) {}
 
 	// Insert the data to the db.
-	async insert(index: string, type: string, data: any)
+	async insert(index: string, data: any, category: string)
 	{
 		let bulkBody = [];
 
 		data.forEach((item) => 
 		{
-			console.log(item.title + "+" + item.publishedAt + "=" + sha1(item.title + item.publishedAt));
+			item["category"] = category;
 
 			bulkBody.push
 			({
@@ -39,12 +39,12 @@ export class ElasticService
 		return(insertedNews);
 	}
 
-	async fetch(index: string)
+	async fetch(index: string, categories: string[])
 	{
 		const result = await this.elasticsearchService.search
 		({
 			index: "news",
-			size:20,
+			size:200,
 			body: 
 			{
 				"sort": 
@@ -55,8 +55,19 @@ export class ElasticService
 							"order": "desc"
 						}
 					}
-				]
-			}			
+				]				
+			}
+		});
+
+		return(result.body.hits.hits);
+	}
+	
+	async fetchCategories()
+	{
+		const result = await this.elasticsearchService.search
+		({
+			index: "category",
+			size:10,
 		});
 
 		return(result.body.hits.hits);

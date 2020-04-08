@@ -17,5 +17,19 @@ export class NewsService
 		});
 
 		return(headlines);
-	}	
+	}
+
+	// Fetching the news per category
+	async getNews(category: string)
+	{
+		const news = await newsapi.v2.topHeadlines
+		({
+			language: "en",
+			country: "in",
+			pageSize: 100,
+			category: category
+		});
+
+		return(news);
+	}
 }

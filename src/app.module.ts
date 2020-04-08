@@ -4,6 +4,7 @@ import { ElasticService } from './elastic.service';
 import { NewsService } from './news/news.service';
 import { ElasticsearchModule } from "@nestjs/elasticsearch";
 import Config from "./config/constants";
+import { FCMService } from './fcm.service';
 
 @Module({
   imports: 
@@ -14,6 +15,6 @@ import Config from "./config/constants";
 	  })
   ],
   controllers: [AppController],
-  providers: [ElasticService, NewsService],
+  providers: [ElasticService, NewsService, FCMService],
 })
 export class AppModule {}
