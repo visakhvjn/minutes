@@ -109,6 +109,7 @@ export class AppController
 	}
 	
 	// Used to send general notifications.
+	@Get("fcm")
 	async sendFcm()
 	{
 		await this.fcm.send("Minutes - The Indian News App", "Stay up-to-date with the latest news just in!");
