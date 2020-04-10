@@ -24,7 +24,7 @@ const fcm = admin.messaging();
 @Injectable()
 export class FCMService
 {
-	async send(title: string, message: string)
+	async send(title: string, message: string, icon: string)
 	{
 		const payload: admin.messaging.MessagingPayload = 
 		{			
@@ -32,7 +32,9 @@ export class FCMService
 			{
 				title: title,
 				body: message,
-				clickAction: "FLUTTER_NOTIFICATION_CLICK"
+				clickAction: "FLUTTER_NOTIFICATION_CLICK",		
+				collapseKey: "collapser",		
+				image: icon
 			}
 		};
 

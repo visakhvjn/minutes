@@ -28,6 +28,8 @@ export class AppController
 		{
 			const articles = parsedNews.articles;
 
+			console.log(articles);
+
 			// Save the headlines to elastic-search.
 			const inserted = await this.elasticService.insert("news", articles, "headlines");
 
@@ -36,7 +38,7 @@ export class AppController
 			this.response.message = "News inserted!";
 			this.response.data = inserted;
 
-			this.sendFcm(); // To notify user.
+			this.sendFcm(articles[0]["title"],articles[0]["description"], articles[0]["urlToImage"]); // To notify user.
 		}
 
 		return(this.response);
@@ -110,8 +112,8 @@ export class AppController
 	
 	// Used to send general notifications.
 	@Get("fcm")
-	async sendFcm()
+	async sendFcm(title: string, description: string, icon: string)
 	{
-		await this.fcm.send("Minutes - The Indian News App", "Stay up-to-date with the latest news just in!");
+		await this.fcm.send(title, description, icon);
 	}
 }
