@@ -36,9 +36,7 @@ export class AppController
 			this.response.status = 200;
 			this.response.apiCount = articles.length;
 			this.response.message = "News inserted!";
-			this.response.data = inserted;
-
-			this.sendFcm(articles[0]["title"],articles[0]["description"], articles[0]["urlToImage"]); // To notify user.
+			this.response.data = inserted;		
 		}
 
 		return(this.response);
@@ -112,8 +110,15 @@ export class AppController
 	
 	// Used to send general notifications.
 	@Get("fcm")
-	async sendFcm(title: string, description: string, icon: string)
+	async sendFcm()
 	{
-		await this.fcm.send(title, description, icon);
+		const result = await this.elasticService.fetchToNotify();
+
+		console.log(result);
+
+		if (result)
+		{
+			await this.fcm.send(result["0"]["_source"]["title"], result["0"]["_source"]["description"], result["0"]["_source"]["urlToImage"]);
+		}
 	}
 }

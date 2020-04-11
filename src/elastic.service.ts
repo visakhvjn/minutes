@@ -16,6 +16,7 @@ export class ElasticService
 		data.forEach((item) => 
 		{
 			item["category"] = category;
+			item["notified"] = 0;
 
 			bulkBody.push
 			({
@@ -58,6 +59,45 @@ export class ElasticService
 				]				
 			}
 		});
+
+		return(result.body.hits.hits);
+	}
+
+	async fetchToNotify()
+	{
+		const result = await this.elasticsearchService.search
+		({
+			index: "news",
+			size: 1,
+			body:
+			{
+				query:
+				{
+					match: 
+					{
+						"notified": 0
+					}
+				}
+			}
+		});
+
+		const response = result.body.hits.hits;
+		const docId = response[0]["_id"];
+
+		const updateResponse = await this.elasticsearchService.update
+		({
+			index: "news",
+			id: docId,
+			body:
+			{
+				script: 
+				{
+					source: 'ctx._source["notified"] = 1'
+				}
+			}
+		});
+
+		console.log(updateResponse);
 
 		return(result.body.hits.hits);
 	}
