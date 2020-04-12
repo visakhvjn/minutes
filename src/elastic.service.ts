@@ -108,7 +108,7 @@ export class ElasticService
 		({
 			index: "category",
 			size:10,
-		});
+		});		
 
 		return(result.body.hits.hits);
 	}

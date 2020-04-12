@@ -121,4 +121,19 @@ export class AppController
 			await this.fcm.send(result["0"]["_source"]["title"], result["0"]["_source"]["description"], result["0"]["_source"]["urlToImage"]);
 		}
 	}
+
+	@Get("category/fetch")
+	async fetchCategories()
+	{
+		const results = await this.elasticService.fetchCategories();
+
+		if (results)
+		{
+			this.response.status = 200;
+			this.response.message = "News fetched!";
+			this.response.data = results;
+		}
+
+		return(this.response);
+	}
 }
