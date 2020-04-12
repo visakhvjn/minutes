@@ -118,7 +118,16 @@ export class AppController
 
 		if (result)
 		{
-			await this.fcm.send(result["0"]["_source"]["title"], result["0"]["_source"]["description"], result["0"]["_source"]["urlToImage"]);
+			await this.fcm.send
+			(
+				result["0"]["_source"]["title"], 
+				result["0"]["_source"]["description"], 
+				result["0"]["_source"]["urlToImage"],
+				result["0"]["_source"]["publishedAt"],
+				result["0"]["_source"]["author"] == null? "" : result["0"]["_source"]["author"],
+				result["0"]["_source"]["content"],
+				result["0"]["_source"]["url"]
+			);
 		}
 	}
 

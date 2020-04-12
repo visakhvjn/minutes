@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import * as admin from "firebase-admin";
+import { strict } from "assert";
 var serviceAccount = {
 	"type": "service_account",
 	"project_id": "minutes-da91d",
@@ -24,7 +25,7 @@ const fcm = admin.messaging();
 @Injectable()
 export class FCMService
 {
-	async send(title: string, message: string, icon: string)
+	async send(title: string, message: string, icon: string, created: string, author, content: string, url: string)
 	{
 		const payload: admin.messaging.MessagingPayload = 
 		{			
@@ -35,6 +36,16 @@ export class FCMService
 				clickAction: "FLUTTER_NOTIFICATION_CLICK",		
 				collapseKey: "collapser",		
 				image: icon
+			},
+			data: 
+			{
+				title: title,
+				description: message,
+				urlToImage: icon,
+				publishedAt: created,
+				author: author,
+				content: content,
+				url: url
 			}
 		};
 
