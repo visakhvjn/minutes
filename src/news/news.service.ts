@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 
 const NewsAPI = require("newsapi");
-const newsapi = new NewsAPI('db90a434a04b4d9ba64070c668e90194');
+const newsapi = new NewsAPI('0b7980368ebf47b3af2442d6d788edf7');
 
 @Injectable()
 export class NewsService 
