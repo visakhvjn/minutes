@@ -117,9 +117,18 @@ export class ElasticService
 	{
 		const { body } = await this.elasticsearchService.search
 		({
-			index: "news",
+			index: "news",			
 			body: 
 			{
+				sort: 
+				[
+					{
+						"publishedAt": 
+						{
+							"order": "desc"
+						}
+					}
+				],
 				query: 
 				{					
 					query_string: 
