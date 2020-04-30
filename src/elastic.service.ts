@@ -112,4 +112,26 @@ export class ElasticService
 
 		return(result.body.hits.hits);
 	}
+
+	async search(term: string)
+	{
+		const { body } = await this.elasticsearchService.search
+		({
+			index: "news",
+			body: 
+			{
+				query: 
+				{					
+					query_string: 
+					{
+						query: term
+					}
+				}
+			}	
+		});
+
+		console.log(body);
+
+		return(body.hits.hits);
+	}
 }

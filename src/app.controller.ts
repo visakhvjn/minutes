@@ -145,4 +145,24 @@ export class AppController
 
 		return(this.response);
 	}
+
+	@Post("search")
+	async search(@Body() body: any)
+	{
+		const result = await this.elasticService.search(body.search);
+
+		if (result)
+		{
+			this.response.status = 200;
+			this.response.message = "News found";
+			this.response.data = result;
+		}
+		else 
+		{
+			this.response.status = 404;
+			this.response.message = "We will get back to you on that topic. For now we have nothing.";			
+		}
+
+		return(this.response);
+	}
 }
