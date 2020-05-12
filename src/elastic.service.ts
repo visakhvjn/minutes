@@ -139,6 +139,125 @@ export class ElasticService
 			}	
 		});
 
+		console.log(body);		
+
+		// Check if already searched.
+		if (await this.searched(term))
+		{
+			await this.updateSearch(term);
+		}
+		else 
+		{
+			await this.addTrending(term);
+		}
+
+		return(body.hits.hits);
+	}
+
+	async searched(term: string)
+	{
+		var found = true;
+
+		term = term.trim();
+		term = term.toLowerCase();
+		term = sha1(term);
+
+		const { body } = await this.elasticsearchService.search
+		({
+			index: "trending",			
+			body: 
+			{				
+				query: 
+				{					
+					term: 
+					{
+						"_id": 
+						{
+							"value": term
+						}
+					}
+				}
+			}
+		});
+
+		console.log("SERACHED?");
+		console.log(body.hits.hits);
+		
+		if (!body.hits.hits.length)
+		{
+			found = false;
+		}
+
+		return(found);
+	}
+
+	async updateSearch(term)
+	{
+		console.log("UPdateing");
+
+		var searchTerm = term; // The actual search term.
+
+		term = term.trim();
+		term = term.toLowerCase();
+		term = sha1(term);
+
+		// Update it's search counter.
+		await this.elasticsearchService.update
+		({
+			index: "trending",
+			id: term,
+			body: 
+			{
+				script: 
+				{
+					source: 'ctx._source.counter++'
+				}
+			}
+		});
+	}
+
+	async addTrending(term)
+	{
+		console.log("adddingnew");
+
+		var id = term.trim();
+		id = id.toLowerCase();
+		id = sha1(id);
+
+		await this.elasticsearchService.index
+		({
+			index: "trending",
+			id: id,
+			body: 
+			{
+				"searched": term,
+				"counter": 1 
+			}
+		});
+
+		return(0);
+	}
+
+	async trending()
+	{
+		const { body } = await this.elasticsearchService.search
+		({
+			index: "trending",	
+			size: 5,		
+			body: 
+			{
+				sort: 
+				[
+					{
+						"counter": 
+						{
+							"order": "desc"
+						}
+					}
+				]
+			}	
+		});
+
 		console.log(body);
 
 		return(body.hits.hits);

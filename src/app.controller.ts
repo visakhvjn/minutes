@@ -165,4 +165,27 @@ export class AppController
 
 		return(this.response);
 	}
+
+	@Get("trending")
+	async trending()
+	{
+		const results = await this.elasticService.trending();
+		
+		console.log(results.length);
+
+		if (results.length)
+		{
+			this.response.status = 200;
+			this.response.message = "Top " + results.length + " trending today!";
+			this.response.data = results;
+		}
+		else 
+		{
+			this.response.status = 500;
+			this.response.message = "Hmm! It seems the world is a little less curious at the moment.";
+			this.response.data = [];
+		}
+
+		return(this.response);
+	}
 }
