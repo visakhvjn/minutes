@@ -176,13 +176,13 @@ export class AppController
 		if (results.length)
 		{
 			this.response.status = 200;
-			this.response.message = "Top " + results.length + " trending today!";
+			this.response.message = "Here are the top " + results.length + " searches trending at the moment. Go ahead and click them to see some interesting results that popped up";
 			this.response.data = results;
 		}
 		else 
 		{
 			this.response.status = 500;
-			this.response.message = "Hmm! It seems the world is a little less curious at the moment.";
+			this.response.message = "Hmm! that is strange. It seems the whole world is a little less curious at the moment. We hope everything gets back to normal";
 			this.response.data = [];
 		}
 
