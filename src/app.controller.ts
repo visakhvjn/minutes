@@ -188,4 +188,24 @@ export class AppController
 
 		return(this.response);
 	}
+
+	@Post("scrape")
+	async scrape(@Body() body:any)
+	{
+		var url = body.url;
+		var tag = body.tag;
+
+		var config = await this.elasticService.fetchScraperConfig(tag);
+
+		const description = await this.newsService.scrape(url, config);
+
+		if (description != "")
+		{
+			this.response.status = 200;
+			this.response.message = "Fetched";
+			this.response.data = description;
+		}
+
+		return(this.response);
+	}
 }

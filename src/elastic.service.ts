@@ -262,4 +262,29 @@ export class ElasticService
 
 		return(body.hits.hits);
 	}
+
+	async fetchScraperConfig(tag)
+	{
+		console.log(tag);
+
+		const { body } = await this.elasticsearchService.search
+		({
+			index: "scraper",	
+			size: 1,		
+			body: 
+			{				
+				query: 
+				{					
+					match:
+					{
+						"tag": tag
+					}
+				}
+			}	
+		});
+
+		console.log(body);
+
+		return(body.hits.hits[0]["_source"]["element"]);
+	}
 }

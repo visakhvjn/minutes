@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, HttpModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { ElasticService } from './elastic.service';
 import { NewsService } from './news/news.service';
@@ -12,7 +12,8 @@ import { FCMService } from './fcm.service';
 	  ElasticsearchModule.register
 	  ({
 		  node: Config.database.elastic.bonsai
-	  })
+	  }),
+	  HttpModule
   ],
   controllers: [AppController],
   providers: [ElasticService, NewsService, FCMService],
