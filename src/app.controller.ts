@@ -21,9 +21,22 @@ export class AppController
 	{
 		const availableServers =
 		[
-			"https://the-news-app-1.herokuapp.com",
-			"https://minutes-news-one.herokuapp.com",
-			"https://minutes-news-two.herokuapp.com",
+			{
+				"url": "https://the-news-app-1.herokuapp.com",
+				"color": "0xfff47d7e"
+			},
+			{
+				"url": "https://minutes-news-one.herokuapp.com",
+				"color": "0xffadd8e6"
+			},
+			{
+				"url": "https://minutes-news-two.herokuapp.com",
+				"color": "0xff90ee90"
+			},
+			{
+				"url": "https://minutes-news-three.herokuapp.com",
+				"color": "0xffb5651d"
+			}
 		];
 
 		const maxServers = availableServers.length;
