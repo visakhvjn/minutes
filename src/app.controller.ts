@@ -20,7 +20,7 @@ export class AppController
 	async fetchBaseUrl()
 	{
 		const availableServers =
-		[
+		[ 
 			{
 				"url": "https://the-news-app-1.herokuapp.com",
 				"color": "0xfff47d7e"
