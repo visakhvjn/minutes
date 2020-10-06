@@ -16,6 +16,23 @@ export class AppController
 
 	constructor(private readonly elasticService: ElasticService, private readonly newsService: NewsService, private readonly fcm: FCMService) {}
 
+	@Get("base")
+	async fetchBaseUrl()
+	{
+		const availableServers =
+		[
+			"https://the-news-app-1.herokuapp.com",
+			"https://minutes-news-one.herokuapp.com",
+			"https://minutes-news-two.herokuapp.com",
+		];
+
+		const maxServers = availableServers.length;
+
+		const randomIndex = Math.floor(Math.random() * Math.floor(maxServers));
+
+		return availableServers[randomIndex];
+	}
+
 	@Get("headlines/create")
 	async create()
 	{
