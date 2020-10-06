@@ -28,11 +28,11 @@ export class AppController
 			{
 				"url": "https://minutes-news-one.herokuapp.com",
 				"color": "0xffadd8e6"
+			},
+			{
+				"url": "https://minutes-news-two.herokuapp.com",
+				"color": "0xff90ee90"
 			}
-			// {
-			// 	"url": "https://minutes-news-two.herokuapp.com",
-			// 	"color": "0xff90ee90"
-			// }
 		];
 
 		const maxServers = availableServers.length;
